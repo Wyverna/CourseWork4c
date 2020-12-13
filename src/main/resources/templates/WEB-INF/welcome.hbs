@@ -1,0 +1,109 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>Main page</title>
+    <script src="jquery.js"
+     type="text/javascript"></script>
+</head>
+<body>
+    <button onclick='location.href="./logout"'>Sign out</button>
+    {{#if_eq role 'admin'}}
+    <script>
+     $.getJSON( "./api/orders/",function(data) {
+      var html='<table id="tableord" border="1"><TR><TD>OrderID</TD><TD>NameProduct</TD><td>Username</td>'+
+        '<TD>dateOrder</TD><TD>dateOrderEnd</TD><TD>unitCost</TD>'+
+        '<TD>address</TD><TD>organizationName</TD><TD>Time to order</TD><TD>ExtraProduct</TD>';
+      for(var i in data)
+      {
+          html+='<tr>';
+          html+='<td>'+data[i]['orderid']+'</td><td>'+data[i]['nameproduct']+'</td><td>'+data[i]['username']+'</td><td>'
+              +data[i]['dateorder']+'</td><td>'+data[i]['dateorderend']+'</td><td>'+data[i]['unitcost']+'</td>'+
+              '<td>'+data[i]['addressclient']+'</td><td>'+data[i]['organizationname']+'</td><td>'+
+                  data[i]['timetoorder']+'</td><td>'+data[i]['extraproduct']+'</td></tr>';
+      }
+      html+='</table>';
+      document.getElementById('table').innerHTML=html;
+  });
+</script>
+    {{/if_eq}}
+    {{#if_eq role 'user'}}
+        <script>
+		function getCookie(name) {
+			let matches = document.cookie.match(new RegExp(
+				"(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
+			));
+			return matches ? decodeURIComponent(matches[1]) : undefined;
+		}
+         $.ajax
+        ({
+        type: "GET",
+        data:{},
+        url:"./api/orders/getByUser",
+        success:function(data) {
+        var html='<table id="tableord" border="1"><TR><TD>OrderID</TD><TD>NameProduct</TD><td>Username</td>'+
+        '<TD>dateOrder</TD><TD>dateOrderEnd</TD><TD>unitCost</TD>'+
+        '<TD>address</TD><TD>organizationName</TD><TD>Time to order</TD><TD>ExtraProduct</TD>';
+        if(Array.isArray(data))
+        {
+        for(var i in data)
+        {
+          html+='<tr>';
+          html+='<td>'+data[i]['orderid']+'</td><td>'+data[i]['nameproduct']+'</td><td>'+data[i]['username']+'</td><td>'
+              +data[i]['dateorder']+
+              '</td><td>'+data[i]['dateorderend']+'</td><td>'+data[i]['unitcost']+'</td>'+
+              '<td>'+data[i]['addressclient']+'</td><td>'+data[i]['organizationname']+'</td><td>'+
+                  data[i]['timetoorder']+'</td><td>'+data[i]['extraproduct']+'</td></tr>';
+        }
+        }
+        html+='</table>';
+        document.getElementById('table').innerHTML=html;
+    }});
+    </script>
+    {{/if_eq}}
+    <script>
+           function send() {
+            $.ajax
+        ({
+            type: "POST",
+            data:{dateOrder:$('#date1').val(),dateOrderEnd:$('#date2').val(),nameProduct:$('#name').val()},
+            url:"./api/orders/getByDate",
+            success:function(data) {
+        var html='<table id="tableord" border="1"><TR><TD>OrderID</TD><TD>NameProduct</TD><td>Username</td>'+
+        '<TD>dateOrder</TD><TD>dateOrderEnd</TD><TD>unitCost</TD>'+
+        '<TD>address</TD><TD>organizationName</TD><TD>Time to order</TD><TD>ExtraProduct</TD>';
+        if(Array.isArray(data))
+        {
+        for(var i in data)
+        {
+          html+='<tr>';
+          html+='<td>'+data[i]['orderid']+'</td><td>'+data[i]['nameproduct']+'</td><td>'+data[i]['username']+'</td><td>'
+              +data[i]['dateorder']+
+              '</td><td>'+data[i]['dateorderend']+'</td><td>'+data[i]['unitcost']+'</td>'+
+              '<td>'+data[i]['addressclient']+'</td><td>'+data[i]['organizationname']+'</td><td>'+
+                  data[i]['timetoorder']+'</td><td>'+data[i]['extraproduct']+'</td></tr>';
+        }
+        }
+        html+='</table>';
+        document.getElementById('table').innerHTML=html;
+        }});
+            }
+    </script>
+    <div>Search Order:
+    Name Product: <input name="nameProduct" id='name' />
+    <br><br>
+    DateStart: <input type="date" name="dateOrder" id='date1'/>
+    <br><br>
+    DateEnd: <input type="date" name="dateOrderEnd" id='date2' /></div>
+<button onclick='send()'>Search</button>
+</div>
+    <script>
+        jQuery('#date1').on('change',function(){
+            document.getElementById("date2").setAttribute("min", $('#date1').val());
+        });
+        jQuery('#date2').on('change',function(){
+            document.getElementById("date1").setAttribute("max", $('#date2').val());
+        });
+    </script>
+</body>
+</html>
