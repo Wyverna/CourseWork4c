@@ -42,6 +42,7 @@ public class PageController {
     @RequestMapping("/order")
 	@AuthorizeAnnotation
     public ModelAndView Order(Model model, HttpServletRequest request) {
+
         return InstallVariables("order",request);
     }
 
