@@ -32,6 +32,14 @@ public class ExtraProductService {
         return extraProductRepository.findAllByOrganizationName(organizationRepository.findByOrganizationName(name));
     }
 
+    public Iterable<ExtraProduct> getByOrganizationNameAndNameProduct(String organizationName,String nameProduct)
+    {
+        Organization organization = organizationRepository.findByOrganizationName(organizationName);
+        return extraProductRepository.findAllByOrganizationNameAndNameProduct(
+                organization,
+                productRepository.findByNameProductAndOrganizationName(nameProduct,organization));
+    }
+
     public void AddItem(ExtraProduct extraProduct)
     {
         extraProductRepository.save(extraProduct);

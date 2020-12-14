@@ -81,10 +81,11 @@
         $.ajax
         ({
         type: "GET",
-        url:"./api/extraproducts/getCost",
-        data:{nameProduct:$('#options :selected').val(),
-            organizationName:$('#Organization :selected').val(),
-            nameExtraProduct:$('#Extra :selected').val()},
+        url:"./api/extraProducts/getCost",
+        data:{
+            nameExtraProduct:$('#Extra :selected').val(),
+            nameProduct:$('#options :selected').val(),
+            organizationName:$('#Organization :selected').val()},
             success:function(data) {
                     document.getElementById("CostOrder").value=(+(document.getElementById("CostOrder").value))+data['unitCost'];
                 }});

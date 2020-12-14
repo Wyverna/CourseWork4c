@@ -10,6 +10,7 @@ import com.example.CourseWork.Models.*;
 public interface ExtraProductRepository extends CrudRepository<ExtraProduct, Integer> {
     Iterable<ExtraProduct> findAllByNameExtraProduct(String name);
     Iterable<ExtraProduct> findAllByOrganizationName(Organization name);
+    Iterable<ExtraProduct> findAllByOrganizationNameAndNameProduct(Organization name, Product product);
     void deleteByNameExtraProductAndNameProductAndOrganizationName(String nameExtraProduct,Product nameProduct,
                                                                          Organization organizationName);
     ExtraProduct findByNameExtraProductAndNameProductAndOrganizationName(String nameExtraProduct,Product nameProduct,

@@ -47,7 +47,7 @@ public class SettingsController {
         user.setLoginuser("admin");
         user.setEmailuser("123@gmail.com");
         user.setRoleuser(roleUserService.GetByName("admin"));
-        user.setPassworduser("202cb962ac59075b964b07152d234b70");
+        user.setPassworduser("123");
         try
         {
             userService.AddItem(user);

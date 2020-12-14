@@ -66,4 +66,11 @@ public class ExtraProductController {
     {
         extraProductService.updateCostProduct(nameExtraProduct,nameProduct,organizationName,costProduct);
     }
+
+    @GetMapping( "/getByOrganizationAndProduct")
+    public Iterable<ExtraProduct> ListByExtraProduct(@RequestParam("organizationName") String organizationName,
+                                                     @RequestParam("nameProduct") String nameProduct)
+    {
+        return extraProductService.getByOrganizationNameAndNameProduct(organizationName,nameProduct);
+    }
 }
