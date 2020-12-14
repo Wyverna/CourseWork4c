@@ -35,6 +35,10 @@ public class CategoryCompanyController {
     {
         try
         {
+            if(categoryCompanyService.getItemByOrganizationNameAndCategoryProduct(organizationName,categoryProduct)!=null)
+            {
+                return "Organization with this category is existing";
+            }
         CategoryCompany categoryCompany = new CategoryCompany();
         categoryCompany.setOrganizationName(organizationService.getItem(organizationName));
         categoryCompany.setCategoryProduct(categoryProductService.getByCategoryProduct(categoryProduct));

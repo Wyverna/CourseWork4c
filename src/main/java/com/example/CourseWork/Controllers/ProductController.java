@@ -59,16 +59,27 @@ public class ProductController {
     }
 
     @PostMapping("/postProduct")
-    public void AddItem(@RequestParam("nameProduct") String nameProduct,
+    public String AddItem(@RequestParam("nameProduct") String nameProduct,
                            @RequestParam("organizationName") String organizationName,
                            @RequestParam("costProduct") Integer costProduct,
                         @RequestParam("categoryProduct") String categoryProduct)
     {
+        if(productService.getCostProduct(nameProduct,organizationName)!=null)
+        {
+            return "This product in organization exist";
+        }
         Product product=new Product();
         product.setCostProduct(costProduct);
         product.setCategoryProduct(categoryProductService.getByCategoryProduct(categoryProduct));
         product.setNameProduct(nameProduct);
         product.setOrganizationName(organizationService.getItem(organizationName));
-        productService.AddItem(product);
+        try {
+            productService.AddItem(product);
+            return "Succes adding item";
+        }
+        catch (Exception e)
+        {
+            return "BAd parameters";
+        }
     }
 }

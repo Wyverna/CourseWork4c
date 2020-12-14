@@ -8,5 +8,5 @@ import com.example.CourseWork.Models.*;
 // CRUD refers Create, Read, Update, Delete
 
 public interface RoleUserRepository extends CrudRepository<RoleUser, Integer> {
-
+    RoleUser findByRolename(String name);
 }

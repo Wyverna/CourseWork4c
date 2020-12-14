@@ -16,9 +16,8 @@ public class CategoryCompanyService {
 
     public void DeleteItem(String organizationName, String categoryProductName)
     {
-        categoryCompanyRepository.deleteByOrganizationNameAndCategoryProduct(
-                organizationRepository.findByOrganizationName(organizationName),
-                categoryProductRepository.findByCategoryProductsName(categoryProductName));
+        categoryCompanyRepository.delete(
+                getItemByOrganizationNameAndCategoryProduct(organizationName,categoryProductName));
     }
 
     public void AddItem(CategoryCompany categoryCompany)
@@ -39,5 +38,11 @@ public class CategoryCompanyService {
     public Iterable<CategoryCompany> getAll()
     {
         return categoryCompanyRepository.findAll();
+    }
+
+    public CategoryCompany getItemByOrganizationNameAndCategoryProduct(String organizationName, String categoryName)
+    {
+        return categoryCompanyRepository.findByOrganizationNameAndCategoryProduct(organizationRepository.findByOrganizationName(organizationName),
+                categoryProductRepository.findByCategoryProductsName(categoryName));
     }
 }

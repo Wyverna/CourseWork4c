@@ -11,7 +11,7 @@
 	<groupId>com.example</groupId>
 	<artifactId>CourseWork</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>war</packaging>
+	<packaging>jar</packaging>
 	<name>CourseWork</name>
 	<description>Course Project</description>
 
@@ -98,11 +98,11 @@
 						<image>
 							<name>app</name>
 							<build>
-								<dockerFileDir>${project.basedir}/src/main/docker</dockerFileDir>
+								<dockerFileDir>${project.basedir}/</dockerFileDir>
 								<assembly>
 									<mode>dir</mode>
 									<targetDir>/app</targetDir>
-									<descriptor>${project.basedir}/src/main/docker/assembly.xml</descriptor>
+									<descriptorRef>artifact-with-dependencies</descriptorRef>
 								</assembly>
 							</build>
 						</image>

@@ -16,4 +16,14 @@ public class RoleUserService {
     {
         return roleUserRepository.findById(id);
     }
+
+    public RoleUser GetByName(String name)
+    {
+        return roleUserRepository.findByRolename(name);
+    }
+
+    public void AddItem(RoleUser roleUser)
+    {
+        roleUserRepository.save(roleUser);
+    }
 }

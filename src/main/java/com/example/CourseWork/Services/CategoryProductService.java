@@ -19,4 +19,9 @@ public class CategoryProductService {
     {
         return categoryProductRepository.findByCategoryProductsName(category);
     }
+
+    public void AddItem(CategoryProduct categoryProduct)
+    {
+        categoryProductRepository.save(categoryProduct);
+    }
 }

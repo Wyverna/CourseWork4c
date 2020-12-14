@@ -1,5 +1,7 @@
 package com.example.CourseWork.Controllers;
 
+import com.example.CourseWork.AOP.AuthorizeAnnotation;
+import com.example.CourseWork.AOP.AuthorizeAnnotationAdmin;
 import org.hibernate.Session;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,17 +27,20 @@ public class PageController {
         return InstallVariables("register",request);
     }
 
+	@AuthorizeAnnotation
     @RequestMapping("/CategoryCompany")
     public ModelAndView CategoryCompany(Model model, HttpServletRequest request) {
         return InstallVariables("categoryCompany",request);
     }
 
+	@AuthorizeAnnotation
     @RequestMapping("/organization")
     public ModelAndView Organization(Model model, HttpServletRequest request) {
         return InstallVariables("organization",request);
     }
 
     @RequestMapping("/order")
+	@AuthorizeAnnotation
     public ModelAndView Order(Model model, HttpServletRequest request) {
         return InstallVariables("order",request);
     }
@@ -48,24 +53,28 @@ public class PageController {
     }
 
     @RequestMapping("/product")
+	@AuthorizeAnnotationAdmin
     public ModelAndView Product(Model model, HttpServletRequest request) {
 
         return InstallVariables("product",request);
     }
 
     @RequestMapping("/extraproduct")
+	@AuthorizeAnnotationAdmin
     public ModelAndView ExtraProduct(Model model, HttpServletRequest request) {
 
         return InstallVariables("extraproduct",request);
     }
 
     @RequestMapping("/report")
+	@AuthorizeAnnotationAdmin
     public ModelAndView Report(Model model, HttpServletRequest request) {
 
         return InstallVariables("report",request);
     }
 
     @RequestMapping("/xml")
+	@AuthorizeAnnotationAdmin
     public ModelAndView Xml(Model model, HttpServletRequest request) {
 
         return InstallVariables("xml",request);

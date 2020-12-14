@@ -14,12 +14,12 @@
 			<li><a href="./organization">Organization</a></li>
 			<li><a href="./order">Add order</a></li>
 			<li><a href="./CategoryCompany">Category Company </a></li>
-			<div th:if="${role}=='admin'">
+			<span th:if="${role}=='admin'">
 			<li><a href="./product">Register Product</a></li>
 			<li><a href="./extraproduct">Register Extra Product</a></li>
 			<li><a href="./xml">XML Page</a></li>
 			<li><a href="./report">Report</a></li>
-			</div>
+			</span>
 		</ul>
 	</div>
 </div>

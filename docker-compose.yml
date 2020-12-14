@@ -1,0 +1,17 @@
+version: '2'
+services:
+ mk-mysql:
+  image: mysql/mysql-server:8.0.20
+  ports:
+   - 3606:3606
+  environment:
+   MYSQL_DATABASE: db_example
+   MYSQL_ROOT_PASSWORD: a6VU7RfSt
+  restart: always
+ app:
+   image: app
+   depends_on:
+    - mk-mysql
+   ports: 
+    - 8080:8080
+   restart: always

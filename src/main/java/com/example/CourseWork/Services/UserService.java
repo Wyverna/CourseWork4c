@@ -19,7 +19,7 @@ public class UserService {
     public void AddItem(User user)
     {
         user.setPassworduser(md5Custom(user.getPassworduser()));
-        RoleUser roleUser = roleUserRepository.findById(1).get();
+        RoleUser roleUser = roleUserRepository.findByRolename("user");
         user.setRoleuser(roleUser);
         userRepository.save(user);
     }
