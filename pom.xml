@@ -98,7 +98,7 @@
 						<image>
 							<name>app</name>
 							<build>
-								<dockerFileDir>${project.basedir}/</dockerFileDir>
+								<dockerFileDir>${project.basedir}/src/main/docker</dockerFileDir>
 								<assembly>
 									<mode>dir</mode>
 									<targetDir>/app</targetDir>

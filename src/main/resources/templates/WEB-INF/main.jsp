@@ -8,6 +8,14 @@
     <link rel="stylesheet" type="text/css" href="./style.css"/>
 </head>
 <body>
+<script>
+    function getCookie(name) {
+        var matches = document.cookie.match(new RegExp(
+            "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
+        ));
+        return matches ? decodeURIComponent(matches[1]) : undefined;
+    }
+</script>
 <div th:insert="/templ::main"></div>
 <button onclick='location.href="./logout"'>Sign out</button>
 <div th:if="${role}=='admin'">
@@ -35,7 +43,7 @@
     $.ajax
     ({
         type: "GET",
-        data:{},
+        data:{base64:getCookie('BASE64')},
         url:"./api/orders/getByUser",
         success:function(data) {
             var html='<table id="tableord" border="1"><TR><TD>OrderID</TD><TD>NameProduct</TD><td>Username</td>'+
@@ -64,7 +72,8 @@
         $.ajax
         ({
             type: "GET",
-            data:{dateOrder:$('#date1').val(),dateOrderEnd:$('#date2').val(),nameProduct:$('#name').val()},
+            data:{dateOrder:$('#date1').val(),dateOrderEnd:$('#date2').val(),nameProduct:$('#name').val(),
+                base64:getCookie('BASE64')},
             url:"./api/orders/getByDate",
             success:function(data) {
                 var html='<table id="tableord" border="1"><TR><TD>OrderID</TD><TD>NameProduct</TD><td>Username</td>'+

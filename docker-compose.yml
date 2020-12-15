@@ -7,6 +7,7 @@ services:
   environment:
    MYSQL_DATABASE: db_example
    MYSQL_ROOT_PASSWORD: a6VU7RfSt
+  network_mode: 'host'
   restart: always
  app:
    image: app
@@ -14,4 +15,5 @@ services:
     - mk-mysql
    ports: 
     - 8080:8080
+   network_mode: 'host'
    restart: always

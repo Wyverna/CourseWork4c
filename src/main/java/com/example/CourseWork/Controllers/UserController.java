@@ -7,7 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.yaml.snakeyaml.external.biz.base64Coder.Base64Coder;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -19,25 +21,23 @@ public class UserController {
     private UserService userService;
     @PostMapping("/login")
     @ResponseStatus(HttpStatus.OK)
-    public void login(@RequestParam("login") String login, @RequestParam("password") String password, HttpServletRequest request, HttpServletResponse response)
+    public String login(@RequestParam("login") String login, @RequestParam("password") String password, HttpServletRequest request, HttpServletResponse response)
+            throws Exception
     {
         User user = userService.getItemByLoginUserAndPassword(login,password);
         if(user!=null)
         {
-            request.getSession().setAttribute("role",user.getRoleuser().getRolename());
-            request.getSession().setAttribute("username",user.getLoginuser());
-
+            String s = user.getLoginuser() + " " + user.getRoleuser().getRolename();
+            String encode = Base64Coder.encodeString(s);
+            Cookie cookie=new Cookie("BASE64", encode);
+            System.out.println(cookie);
+            response.addCookie(cookie);
+            return encode;
         }
         else
         {
-            request.getSession().setAttribute("message","Wrong login or password");
-        }
-        try {
-            response.sendRedirect("/");
-        }
-        catch (Exception e)
-        {
-            System.out.println(e.getMessage());
+            response.sendError(403,"Wrong login or password");
+            return "Wrong login or password";
         }
     }
 

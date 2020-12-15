@@ -7,6 +7,7 @@ import com.example.CourseWork.Services.ProductService;
 import com.example.CourseWork.Services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.yaml.snakeyaml.external.biz.base64Coder.Base64Coder;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -32,10 +33,10 @@ public class OrderController {
     }
 
     @GetMapping("/getByUser")
-    public Iterable<Order> getByUser(HttpServletRequest request)
+    public Iterable<Order> getByUser(@RequestParam("base64") String base64)
     {
-        HttpSession session = request.getSession();
-        return orderService.getByUser((String)session.getAttribute("username"));
+        String username = Base64Coder.decodeString(base64).split(" ")[0];
+        return orderService.getByUser(username);
     }
 
     @GetMapping("/getSumByDate")
@@ -58,13 +59,13 @@ public class OrderController {
                          @RequestParam("unitCost") Integer unitcost,@RequestParam("addressClient") String addressClient,
                          @RequestParam("timeToOrder") String timeToOrder,@RequestParam("nameExtraProduct") String nameExtraProduct,
                          @RequestParam("organizationName") String organizationName, @RequestParam("nameProduct") String nameProduct,
-                         HttpServletRequest request)
+                           @RequestParam("base64") String base64)
     {
         try {
             SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
             Date date1 = formatter.parse(dateOrder);
             Date date2 = formatter.parse(dateOrderEnd);
-            HttpSession session = request.getSession();
+            String username = Base64Coder.decodeString(base64).split(" ")[0];
             Order order = new Order();
             order.setDateOrder(date1);
             order.setDateOrderEnd(date2);
@@ -76,7 +77,7 @@ public class OrderController {
             order.setNameExtraProduct(nameExtraProduct);
             order.setOrganizationName(organizationService.getItem(organizationName));
             order.setNameProduct(productService.getCostProduct(nameProduct, organizationName));
-            order.setUsername(userService.getItemByLoginUser((String) session.getAttribute("username")));
+            order.setUsername(userService.getItemByLoginUser(username));
             orderService.AddItem(order);
             return "Succesfully adding item";
         }
@@ -88,12 +89,12 @@ public class OrderController {
 
     @GetMapping("/getByDate")
     public Iterable<Order> getByDate(@RequestParam("dateOrder") String dateOrder,@RequestParam("dateOrderEnd") String dateOrderEnd,
-                                     @RequestParam("nameProduct") String nameProduct, HttpServletRequest request)
+                                     @RequestParam("nameProduct") String nameProduct, @RequestParam("base64") String base64)
     {
         System.out.println(dateOrder);
-        HttpSession session=request.getSession();
-        String username= (String)session.getAttribute("username");
-        String role= (String)session.getAttribute("role");
+        String[] params = Base64Coder.decodeString(base64).split(" ");
+        String username= params[0];
+        String role= params[1];
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         Date date1 = null;
         Date date2 = null;

@@ -7,6 +7,14 @@
     <link rel="stylesheet" type="text/css" href="./style.css"/>
 </head>
 <body>
+<script>
+    function getCookie(name) {
+        var matches = document.cookie.match(new RegExp(
+            "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
+        ));
+        return matches ? decodeURIComponent(matches[1]) : undefined;
+    }
+</script>
 <div th:insert="/templ::main"></div>
 <div id="message"></div>
 <form onsubmit="return postOrder()">
@@ -145,7 +153,8 @@ function postOrder() {
             unitCost: $('#CostOrder').val(),
             addressClient: $('#address').val(),
             organizationName: $('#Organization').val(),
-            timeToOrder: $('#time').val()
+            timeToOrder: $('#time').val(),
+            base64:getCookie('BASE64')
 
         },
         url: "./api/orders/postOrder",
