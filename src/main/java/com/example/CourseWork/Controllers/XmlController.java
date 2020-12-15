@@ -36,12 +36,11 @@ public class XmlController {
     private UserService userService;
 
     @PostMapping("/ImportXML")
-    public String UploadFile(@RequestParam("file") MultipartFile file, HttpServletRequest request)
+    public String UploadFile(@RequestParam("file") MultipartFile file)
     {
         try {
             String xml = new String(file.getBytes());
             Document doc = convertStringToXMLDocument(xml);
-            HttpSession session = request.getSession();
             NodeList nodes =doc.getFirstChild().getChildNodes();
             for(int i=0;i<nodes.getLength();i++)
             {
@@ -67,7 +66,7 @@ public class XmlController {
                 order.setNameExtraProduct(nameExtraProduct);
                 order.setOrganizationName(organizationService.getItem(organizationName));
                 order.setNameProduct(productService.getCostProduct(nameProduct,organizationName));
-                order.setUsername(userService.getItemByLoginUser((String)session.getAttribute("username")));
+                order.setUsername(userService.getItemByLoginUser(username));
                 orderService.AddItem(order);
             }
             return "Succesfuly adding orders";

@@ -29,7 +29,7 @@
             html+='<tr>';
             html+='<td>'+data[i]['orderId']+'</td><td>'+data[i]['nameProduct']['nameProduct']+'</td><td>'
                 +data[i]['username']['loginuser']+'</td><td>'
-                +data[i]['dateOrder']+'</td><td>'+data[i]['dateOrderEnd']+'</td><td>'+data[i]['unitCost']+'</td>'+
+                +data[i]['dateOrder'].slice(0,10)+'</td><td>'+data[i]['dateOrderEnd'].slice(0,10)+'</td><td>'+data[i]['unitCost']+'</td>'+
                 '<td>'+data[i]['addressClient']+'</td><td>'+data[i]['organizationName']['organizationName']+'</td><td>'+
                 data[i]['timeToOrder']+'</td><td>'+data[i]['extraProduct']+'</td></tr>';
         }
