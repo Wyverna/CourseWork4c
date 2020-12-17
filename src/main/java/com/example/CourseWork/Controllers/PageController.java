@@ -21,7 +21,6 @@ public class PageController {
 
     @RequestMapping("/")
     public ModelAndView index(Model model, HttpServletRequest request) {
-        checkCookie(request);
         return InstallVariables("index", request);
     }
 
@@ -85,6 +84,7 @@ public class PageController {
     }
 
     private ModelAndView InstallVariables(String page, HttpServletRequest request) {
+        checkCookie(request);
         ModelAndView modelAndView = new ModelAndView(page);
         HttpSession session = request.getSession();
         String role = (String) session.getAttribute("role");
