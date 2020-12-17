@@ -23,7 +23,7 @@ public class ExtraProduct implements Serializable {
     @GeneratedValue(strategy=GenerationType.AUTO)
     private Integer extraProductId;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
 	private String nameExtraProduct;
 
 	@Column(nullable = false)
